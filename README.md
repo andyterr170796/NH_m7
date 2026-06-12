@@ -110,7 +110,7 @@ cd NH_m7
 Se recomienda utilizar un entorno virtual (venv o conda):
 
 ```bash
-pip install numpy pandas matplotlib seaborn scikit-learn scipy optuna imbalanced-learn shap
+pip install -r requirements.txt
 ```
 
 > [!NOTE]
