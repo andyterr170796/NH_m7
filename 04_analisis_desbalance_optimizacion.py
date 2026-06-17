@@ -24,7 +24,7 @@ from scipy import stats
 from sklearn.model_selection import train_test_split, StratifiedKFold, RandomizedSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, average_precision_score, f1_score, matthews_corrcoef, brier_score_loss
+from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, average_precision_score, f1_score, fbeta_score, matthews_corrcoef, brier_score_loss
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.utils.class_weight import compute_sample_weight
 import optuna
@@ -65,7 +65,7 @@ print("==================================================")
 print("1. CARGANDO Y PREPARANDO DATOS (CREDIT CARD FRAUD)")
 print("==================================================")
 
-workspace_dir = r"c:\Users\ANDY\OneDrive\Desktop\Clases dictadas\Clases New Horizons\Python para IA y Webscraping\M7 - Evaluacion y optimizacion avanzada"
+workspace_dir = r"C:\Users\ANDY\OneDrive\Desktop\Clases dictadas\Clases New Horizons\Python para IA y Webscraping\M7 - Evaluacion y optimizacion avanzada\NH_m7"
 local_file = os.path.join(workspace_dir, "creditcard.csv")
 
 if not os.path.exists(local_file):
@@ -134,6 +134,7 @@ for name, model in base_models.items():
     auc_score = roc_auc_score(y_test, probs)
     ap_score = average_precision_score(y_test, probs)
     f1 = f1_score(y_test, preds)
+    f2 = fbeta_score(y_test, preds, beta=2)
     mcc = matthews_corrcoef(y_test, preds)
     brier = brier_score_loss(y_test, probs)
     
@@ -141,13 +142,14 @@ for name, model in base_models.items():
         'ROC AUC': auc_score,
         'PR AUC': ap_score,
         'F1-Score': f1,
+        'F2-Score': f2,
         'MCC': mcc,
         'Brier Score': brier,
         'Probs': probs
     }
     
     print(f" - {name}:")
-    print(f"   ROC AUC: {auc_score:.4f} | PR AUC: {ap_score:.4f} | F1-Score: {f1:.4f} | MCC: {mcc:.4f} | Brier: {brier:.4f}")
+    print(f"   ROC AUC: {auc_score:.4f} | PR AUC: {ap_score:.4f} | F1-Score: {f1:.4f} | F2-Score: {f2:.4f} | MCC: {mcc:.4f} | Brier: {brier:.4f}")
 
 # Determinar el algoritmo ganador basado en el MCC
 winning_name = max(results, key=lambda k: results[k]['MCC'])

@@ -109,7 +109,7 @@ try:
         C = trial.suggest_float('classifier__C', 0.01, 100.0, log=True)
         use_idf = trial.suggest_categorical('vectorizer__use_idf', [True, False])
         ngram = trial.suggest_categorical('vectorizer__ngram_range', [(1, 1), (1, 2)])
-        
+
         test_pipeline = Pipeline([
             ('vectorizer', TfidfVectorizer(stop_words='english', max_features=1000, use_idf=use_idf, ngram_range=ngram)),
             ('classifier', LogisticRegression(max_iter=1000, C=C, random_state=42))

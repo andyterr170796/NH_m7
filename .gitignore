@@ -26,6 +26,9 @@ share/python-wheels/
 *.egg
 *.xlsx
 *.pptx
+*.png
+*.packaging
+creditcard.csv
 MANIFEST
 
 # PyInstaller
